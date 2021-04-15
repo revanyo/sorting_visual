@@ -9,6 +9,7 @@ class Chart extends React.Component {
     };
 
     this.newArray = this.newArray.bind(this);
+    this.bubbleSort = this.bubbleSort.bind(this);
   }
   componentDidMount() {
     this.newArray();
@@ -27,6 +28,28 @@ class Chart extends React.Component {
     });
   }
 
+  bubbleSort(array) {
+    const inner = (array) => {
+      let count = 0;
+      for (let i = 0; i < array.length; i++) {
+        if (array[i] > array[i + 1]) {
+          count++;
+          let tempOne = array[i];
+          let tempTwo = array[i + 1];
+          array[i] = tempTwo;
+          array[i + 1] = tempOne;
+        }
+      }
+      if (count > 0) {
+        inner(array);
+      }
+    };
+    inner(array);
+    this.setState({
+      data: array,
+    });
+  }
+
   render() {
     return (
       <div className="array-container">
@@ -37,8 +60,10 @@ class Chart extends React.Component {
             style={{ height: `${value}px` }}
           ></div>
         ))}
-        {/* <button onClick={() => newArray()}>Generate a new Array</button>
-        <button onClick={() => bubbleSort(data)}>Bubble Sort</button> */}
+        <button onClick={() => this.newArray()}>Generate a new Array</button>
+        <button onClick={() => this.bubbleSort(this.state.data)}>
+          Bubble Sort
+        </button>
       </div>
     );
   }
