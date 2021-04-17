@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import bubbleSort from "../algos/algos.js";
+import { bubbleSort, merge, mergeSort } from "../algos/algos.js";
 
 class Chart extends React.Component {
   constructor(props) {
@@ -9,7 +9,6 @@ class Chart extends React.Component {
     };
 
     this.newArray = this.newArray.bind(this);
-    this.bubbleSort = this.bubbleSort.bind(this);
   }
   componentDidMount() {
     this.newArray();
@@ -21,32 +20,12 @@ class Chart extends React.Component {
     let result = [];
     while (result.length < 310) {
       let temp = Math.floor(Math.random() * 310);
-      result.push(temp);
+      if (!result.includes(temp)) {
+        result.push(temp);
+      }
     }
     this.setState({
       data: result,
-    });
-  }
-
-  bubbleSort(array) {
-    const inner = (array) => {
-      let count = 0;
-      for (let i = 0; i < array.length; i++) {
-        if (array[i] > array[i + 1]) {
-          count++;
-          let tempOne = array[i];
-          let tempTwo = array[i + 1];
-          array[i] = tempTwo;
-          array[i + 1] = tempOne;
-        }
-      }
-      if (count > 0) {
-        inner(array);
-      }
-    };
-    inner(array);
-    this.setState({
-      data: array,
     });
   }
 
@@ -61,8 +40,17 @@ class Chart extends React.Component {
           ></div>
         ))}
         <button onClick={() => this.newArray()}>Generate a new Array</button>
-        <button onClick={() => this.bubbleSort(this.state.data)}>
+        <button
+          onClick={() => {
+            const array = bubbleSort(this.state.data);
+            this.setState(array);
+          }}
+        >
           Bubble Sort
+        </button>
+        <button onClick={() => mergeSort(this.state.data)}>Merge Sort</button>
+        <button onClick={() => this.mergeSort(this.state.data)}>
+          Selection Sort
         </button>
       </div>
     );
