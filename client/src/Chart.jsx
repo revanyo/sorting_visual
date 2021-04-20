@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { bubbleSort, merge, mergeSort } from "../algos/algos.js";
+import { bubbleSort, merge, mergeSort, selectSort } from "../algos/algos.js";
 
 class Chart extends React.Component {
   constructor(props) {
@@ -30,6 +30,7 @@ class Chart extends React.Component {
   }
 
   render() {
+    console.log(this.state.data, "data");
     return (
       <div className="array-container">
         {this.state.data.map((value, idx) => (
@@ -43,13 +44,22 @@ class Chart extends React.Component {
         <button
           onClick={() => {
             const array = bubbleSort(this.state.data);
-            this.setState(array);
+            this.setState({
+              data: array,
+            });
           }}
         >
           Bubble Sort
         </button>
         <button onClick={() => mergeSort(this.state.data)}>Merge Sort</button>
-        <button onClick={() => this.mergeSort(this.state.data)}>
+        <button
+          onClick={() => {
+            const array = selectSort(this.state.data);
+            this.setState({
+              data: array,
+            });
+          }}
+        >
           Selection Sort
         </button>
       </div>
